@@ -1109,6 +1109,10 @@ class ConfigProviders:
 
             if curProvider == 'nzbs_org':
                 sickbeard.NZBS = curEnabled
+            elif curProvider == 'nzbindex':
+                 sickbeard.NZBINDEX = curEnabled
+            elif curProvider == 'nzbserien':
+                sickbeard.NZBSERIEN = curEnabled
             elif curProvider == 'nzbs_r_us':
                 sickbeard.NZBSRUS = curEnabled
             elif curProvider == 'nzbmatrix':
