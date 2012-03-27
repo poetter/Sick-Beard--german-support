@@ -1136,16 +1136,20 @@ class ConfigProviders:
 
             provider_list.append(curProvider)
 
-            if curProvider == 'nzbs_r_us':
-                sickbeard.NZBSRUS = curEnabled
-            elif curProvider == 'nzbs_org_old':
+<<<<<<< HEAD
+            if curProvider == 'nzbs_org':
                 sickbeard.NZBS = curEnabled
             elif curProvider == 'nzbindex':
                  sickbeard.NZBINDEX = curEnabled
             elif curProvider == 'nzbserien':
                 sickbeard.NZBSERIEN = curEnabled
             elif curProvider == 'nzbs_r_us':
+=======
+            if curProvider == 'nzbs_r_us':
+>>>>>>> 96c09716a7adbf3b569aa6bd57c5fda963298323
                 sickbeard.NZBSRUS = curEnabled
+            elif curProvider == 'nzbs_org_old':
+                sickbeard.NZBS = curEnabled
             elif curProvider == 'nzbmatrix':
                 sickbeard.NZBMATRIX = curEnabled
             elif curProvider == 'newzbin':
@@ -1172,6 +1176,12 @@ class ConfigProviders:
         sickbeard.BTN_AUTH_TOKEN = btn_auth_token.strip()
         sickbeard.BTN_PASSKEY = btn_passkey.strip()
         sickbeard.BTN_AUTHKEY = btn_authkey.strip()
+<<<<<<< HEAD
+
+        sickbeard.NZBS_UID = nzbs_org_uid.strip()
+        sickbeard.NZBS_HASH = nzbs_org_hash.strip()
+=======
+>>>>>>> 96c09716a7adbf3b569aa6bd57c5fda963298323
 
         sickbeard.NZBSRUS_UID = nzbs_r_us_uid.strip()
         sickbeard.NZBSRUS_HASH = nzbs_r_us_hash.strip()
