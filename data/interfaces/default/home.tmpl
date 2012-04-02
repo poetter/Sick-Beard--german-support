@@ -24,8 +24,8 @@
     id: 'loadingNames',
     is: function(s) {
         return false;
-    }, 
-    format: function(s) { 
+    },
+    format: function(s) {
         if (s.indexOf('Loading...') == 0)
             return s.replace('Loading...','000');
         return (s || '').replace(/^(The|A|Der|Die|Das|Ein|Eine|Einer)\s/i,'');

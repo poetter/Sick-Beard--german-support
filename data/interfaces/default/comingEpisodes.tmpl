@@ -25,12 +25,11 @@
 <script type="text/javascript" src="$sbRoot/js/plotTooltip.js"></script>
 <script type="text/javascript" charset="utf-8">
 <!--
-
 \$.tablesorter.addParser({
     id: 'loadingNames',
     is: function(s) {
         return false;
-    }, 
+    },
     format: function(s) {
         if (s.indexOf('Loading...') == 0)
             return s.replace('Loading...','000');
@@ -38,7 +37,6 @@
     },
     type: 'text'
 });
-
 \$.tablesorter.addParser({
     id: 'quality',
     is: function(s) {
