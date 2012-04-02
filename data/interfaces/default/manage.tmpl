@@ -15,13 +15,8 @@
     is: function(s) {
         return false;
     }, 
-    format: function(s) { 
-        if (s.indexOf('The ') == 0)
-            return s.replace('The ', '')
-        else if (s.indexOf('A ') == 0)
-            return s.replace('A ', '')
-        else
-            return s;
+    format: function(s) {
+        return (s || '').replace(/^(The|A|Der|Die|Das|Ein|Eine|Einer)\s/i,'');
     },
     type: 'text'
 });

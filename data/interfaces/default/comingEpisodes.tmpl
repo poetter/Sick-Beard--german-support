@@ -33,13 +33,8 @@
     }, 
     format: function(s) {
         if (s.indexOf('Loading...') == 0)
-            return s.replace('Loading...','!!!');
-        else if (s.indexOf('The ') == 0)
-            return s.replace('The ', '')
-        else if (s.indexOf('A ') == 0)
-            return s.replace('A ', '')
-        else
-            return s;
+            return s.replace('Loading...','000');
+        return (s || '').replace(/^(The|A|Der|Die|Das|Ein|Eine|Einer)\s/i,'');
     },
     type: 'text'
 });
