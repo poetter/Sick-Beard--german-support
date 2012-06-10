@@ -29,7 +29,10 @@ import datetime
 
 from name_parser.parser import NameParser, InvalidNameException
 
-resultFilters = ["sub(pack|s|bed)?", "nlsub(bed|s)?", "swesub(bed)?", "(sample|nfo)fix", "sample", "(dvd)?extras"]
+resultFilters = ["sub(pack|s|bed)?", "nlsub(bed|s)?", "swesub(bed)?",
+                 "(sample|nfo)fix", "sample", "(dvd)?extras"]
+
+mandatory = ["ger(?:man)*"]
 
 def filterBadReleases(name):
     """
@@ -66,6 +69,12 @@ def filterBadReleases(name):
     for x in resultFilters + sickbeard.IGNORE_WORDS.split(','):
         if re.search('(^|[\W_])'+x+'($|[\W_])', check_string, re.I):
             logger.log(u"Invalid scene release: "+name+" contains "+x+", ignoring it", logger.DEBUG)
+            return False
+
+    # if every of the mandatory words are in there, say yes
+    for x in mandatory:
+        if not re.search('(^|[\W_])'+x+'($|[\W_])', check_string, re.I):
+            logger.log(u"Mandatory string not found: "+name+" doesnt contains "+x+", ignoring it", logger.DEBUG)
             return False
 
     return True
