@@ -120,6 +120,20 @@ def change_TORRENT_DIR(torrent_dir):
 
     return True
 
+def change_SCENEEX_DIR(sceneex_dir):
+
+    if sceneex_dir == '':
+        sickbeard.SCENEEX_DIR = ''
+        return True
+
+    if os.path.normpath(sickbeard.SCENEEX_DIR) != os.path.normpath(sceneex_dir):
+        if helpers.makeDir(sceneex_dir):
+            sickbeard.SCENEEX_DIR = os.path.normpath(sceneex_dir)
+            logger.log(u"Changed Exceptions to " + sceneex_dir)
+    else:
+        return False
+
+    return True
 
 def change_TV_DOWNLOAD_DIR(tv_download_dir):
 

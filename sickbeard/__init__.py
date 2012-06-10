@@ -88,6 +88,8 @@ started = False
 
 LOG_DIR = None
 
+SCENEEX_DIR = None
+
 WEB_PORT = None
 WEB_LOG = None
 WEB_ROOT = None
@@ -290,7 +292,7 @@ EXTRA_SCRIPTS = []
 
 GIT_PATH = None
 
-IGNORE_WORDS = "french,core2hd,dutch,swedish"
+IGNORE_WORDS = "french,core2hd,dutch,swedish,subbed"
 
 __INITIALIZED__ = False
 
@@ -381,7 +383,7 @@ def initialize(consoleLogging=True):
 
     with INIT_LOCK:
 
-        global LOG_DIR, WEB_PORT, WEB_LOG, WEB_ROOT, WEB_USERNAME, WEB_PASSWORD, WEB_HOST, WEB_IPV6, USE_API, API_KEY, ENABLE_HTTPS, HTTPS_CERT, HTTPS_KEY, \
+        global SCENEEX_DIR, LOG_DIR, WEB_PORT, WEB_LOG, WEB_ROOT, WEB_USERNAME, WEB_PASSWORD, WEB_HOST, WEB_IPV6, USE_API, API_KEY, ENABLE_HTTPS, HTTPS_CERT, HTTPS_KEY, \
                 USE_NZBS, USE_TORRENTS, NZB_METHOD, NZB_DIR, DOWNLOAD_PROPERS, \
                 SAB_USERNAME, SAB_PASSWORD, SAB_APIKEY, SAB_CATEGORY, SAB_HOST, \
                 NZBGET_PASSWORD, NZBGET_CATEGORY, NZBGET_HOST, currentSearchScheduler, backlogSearchScheduler, \
@@ -438,12 +440,12 @@ def initialize(consoleLogging=True):
             logger.log(u"!!! No log folder, logging to screen only!", logger.ERROR)
 
         try:
-            WEB_PORT = check_setting_int(CFG, 'General', 'web_port', 8081)
+            WEB_PORT = check_setting_int(CFG, 'General', 'web_port', 8082)
         except:
-            WEB_PORT = 8081
+            WEB_PORT = 8082
 
         if WEB_PORT < 21 or WEB_PORT > 65535:
-            WEB_PORT = 8081
+            WEB_PORT = 8082
 
         WEB_HOST = check_setting_str(CFG, 'General', 'web_host', '0.0.0.0')
         WEB_IPV6 = bool(check_setting_int(CFG, 'General', 'web_ipv6', 0))
@@ -533,7 +535,7 @@ def initialize(consoleLogging=True):
 
         NZB_DIR = check_setting_str(CFG, 'Blackhole', 'nzb_dir', '')
         TORRENT_DIR = check_setting_str(CFG, 'Blackhole', 'torrent_dir', '')
-
+        SCENEEX_DIR = check_setting_str(CFG, 'General', 'sceneex_dir', '')
         TV_DOWNLOAD_DIR = check_setting_str(CFG, 'General', 'tv_download_dir', '')
         PROCESS_AUTOMATICALLY = check_setting_int(CFG, 'General', 'process_automatically', 0)
         RENAME_EPISODES = check_setting_int(CFG, 'General', 'rename_episodes', 1)
@@ -1003,6 +1005,7 @@ def save_config():
     new_config.filename = CONFIG_FILE
 
     new_config['General'] = {}
+    new_config['General']['sceneex_dir'] = SCENEEX_DIR
     new_config['General']['log_dir'] = LOG_DIR
     new_config['General']['web_port'] = WEB_PORT
     new_config['General']['web_host'] = WEB_HOST

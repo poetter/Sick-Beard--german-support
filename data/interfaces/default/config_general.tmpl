@@ -58,6 +58,13 @@
                             </label>
                         </div>
 
+                        <div class="field-pair">
+                            <label class="nocheck clearfix" for="scenex_dir">
+                                <span class="component-title">Scene Exception Directory</span>
+                                <input type="text" name="sceneex_dir" id="sceneex_dir" value="$sickbeard.SCENEEX_DIR" size="35" />
+                            </label>
+                        </div>
+
                         <input type="submit" class="config_submitter" value="Save Changes" />
                     </fieldset>
                 </div><!-- /component-group1 //-->
@@ -202,6 +209,7 @@
 <script type="text/javascript" charset="utf-8">
 <!--
     jQuery('#log_dir').fileBrowser({ title: 'Select Log Directory' });
+    jQuery('#sceneex_dir').fileBrowser({ title: 'Select Log Directory' });
 //-->
 </script>
 

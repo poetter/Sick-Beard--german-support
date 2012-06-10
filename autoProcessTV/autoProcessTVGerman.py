@@ -44,11 +44,11 @@ class AuthURLOpener(urllib.FancyURLopener):
 def processEpisode(dirName, nzbName=None):
 
     config = ConfigParser.ConfigParser()
-    configFilename = os.path.join(os.path.dirname(sys.argv[0]), "autoProcessTV.cfg")
+    configFilename = os.path.join(os.path.dirname(sys.argv[0]), "autoProcessTVGerman.cfg")
     print "Loading config from", configFilename
     
     if not os.path.isfile(configFilename):
-        print "ERROR: You need an autoProcessTV.cfg file - did you rename and edit the .sample?"
+        print "ERROR: You need an autoProcessTVGerman.cfg file - did you rename and edit the .sample?"
         sys.exit(-1)
     
     config.read(configFilename)

@@ -19,6 +19,8 @@
 import re
 import urllib
 
+import sickbeard
+
 from sickbeard.helpers import sanitizeSceneName
 from sickbeard import name_cache
 from sickbeard import logger
@@ -66,23 +68,26 @@ def retrieve_exceptions():
 
     exception_dict = {}
 
-    # exceptions are stored on github pages
-    url = 'http://midgetspy.github.com/sb_tvdb_scene_exceptions/exceptions.txt'
-    open_url = urllib.urlopen(url)
+    sceneexFile = sickbeard.SCENEEX_DIR + '\exceptions.txt'
+    logger.log(u"retrieve_exceptions: " + sceneexFile, logger.DEBUG)
+    f = open(sceneexFile)
+    try:
     
-    # each exception is on one line with the format tvdb_id: 'show name 1', 'show name 2', etc
-    for cur_line in open_url.readlines():
-        tvdb_id, sep, aliases = cur_line.partition(':') #@UnusedVariable
+        # each exception is on one line with the format tvdb_id: 'show name 1', 'show name 2', etc
+        for cur_line in f:
+            tvdb_id, sep, aliases = cur_line.partition(':') #@UnusedVariable
+            
+            if not aliases:
+                continue
         
-        if not aliases:
-            continue
-    
-        tvdb_id = int(tvdb_id)
-        
-        # regex out the list of shows, taking \' into account
-        alias_list = [re.sub(r'\\(.)', r'\1', x) for x in re.findall(r"'(.*?)(?<!\\)',?", aliases)]
-        
-        exception_dict[tvdb_id] = alias_list
+            tvdb_id = int(tvdb_id)
+            
+            # regex out the list of shows, taking \' into account
+            alias_list = [re.sub(r'\\(.)', r'\1', x) for x in re.findall(r"'(.*?)(?<!\\)',?", aliases)]
+            
+            exception_dict[tvdb_id] = alias_list
+    finally:
+        f.close()
 
     myDB = db.DBConnection("cache.db")
 

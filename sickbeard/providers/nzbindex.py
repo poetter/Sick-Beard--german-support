@@ -46,21 +46,36 @@ class NZBIndexProvider(generic.NZBProvider):
         return sickbeard.NZBINDEX
 
     def _get_season_search_strings(self, show, season):
-        sceneSearchStrings = set(show_name_helpers.makeSceneSeasonSearchString(show, season, "NZBIndex"))
-
-        # search for all show names and episode numbers like ("a","b","c") in a single search
-        return [' '.join(sceneSearchStrings)]
+        sceneSearchString = [x for x in show_name_helpers.makeSceneSeasonSearchString(show, season)]
+        if not sceneSearchString:
+            if show.tvrname:
+                sceneSearchString = show.tvrname + " S%02d"%(season)
+            else:
+                sceneSearchString = show.name + " S%02d"%(season)
+            logger.log(u"_get_season_search_string: " + sceneSearchString, logger.DEBUG)
+            return [sceneSearchString]
+        else:
+            for x in sceneSearchString:
+                logger.log(u"_get_season_search_string: " + x, logger.DEBUG)
+            return sceneSearchString
 
     def _get_episode_search_strings(self, ep_obj):
-        # tvrname is better for most shows
-        if ep_obj.show.tvrname:
-            searchStr = ep_obj.show.tvrname + " S%02dE%02d"%(ep_obj.season, ep_obj.episode)
+        searchStr = [x for x in show_name_helpers.makeSceneSearchString(ep_obj)]
+        if not searchStr:
+            if ep_obj.show.tvrname:
+                searchStr = ep_obj.show.tvrname + " S%02dE%02d"%(ep_obj.season, ep_obj.episode)
+            else:
+                searchStr = ep_obj.show.name + " S%02dE%02d"%(ep_obj.season, ep_obj.episode)
+            logger.log(u"_get_episode_search_strings: " + searchStr, logger.DEBUG)
+            return [searchStr]
         else:
-            searchStr = ep_obj.show.name + " S%02dE%02d"%(ep_obj.season, ep_obj.episode)
-        return [searchStr]
+            for x in searchStr:
+                logger.log(u"_get_episode_search_strings: " + x, logger.DEBUG)
+            return searchStr
 
     def _doSearch(self, curString, quotes=False, show=None):
 
+        curString = curString + " german"
         term =  re.sub('[\.\-]', ' ', curString).encode('utf-8')
         if quotes:
             term = "\""+term+"\""
