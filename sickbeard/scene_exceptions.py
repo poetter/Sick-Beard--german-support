@@ -68,6 +68,27 @@ def retrieve_exceptions():
 
     exception_dict = {}
 
+	url = 'http://midgetspy.github.com/sb_tvdb_scene_exceptions/exceptions.txt'
+	logger.log(u"retrieve_exceptions: " + url, logger.DEBUG)
+	
+	open_url = urllib.urlopen(url)
+	
+	for cur_line in open_url.readlines():
+
+        # each exception is on one line with the format tvdb_id: 'show name 1', 'show name 2', etc
+        for cur_line in f:
+        tvdb_id, sep, aliases = cur_line.partition(':') #@UnusedVariable
+            
+        if not aliases:
+            continue
+        
+        tvdb_id = int(tvdb_id)
+            
+        # regex out the list of shows, taking \' into account
+        alias_list = [re.sub(r'\\(.)', r'\1', x) for x in re.findall(r"'(.*?)(?<!\\)',?", aliases)]
+            
+        exception_dict[tvdb_id] = alias_list
+
     sceneexFile = sickbeard.SCENEEX_DIR + '\exceptions.txt'
     logger.log(u"retrieve_exceptions: " + sceneexFile, logger.DEBUG)
     f = open(sceneexFile)
